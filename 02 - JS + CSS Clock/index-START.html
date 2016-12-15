@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
 </head>
+
 <body>
 
 
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-      </div>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
     </div>
+  </div>
 
 
   <style>
@@ -61,13 +63,39 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
     }
 
   </style>
 
-  <script>
+<script>
 
+  const secondHand = document.querySelector('.second-hand');
+  const minuteHand = document.querySelector('.min-hand');
+  const hourHand = document.querySelector('.hour-hand');
 
-  </script>
+  const rotateHand = (elem, unit, aux) => {
+    elem.style.transform = `rotate(${(unit * (360 / aux)) + 90}deg)`;
+  };
+
+  const getDate = () => {
+    const now = new Date();
+    return {
+      seconds: now.getSeconds(),
+      minutes: now.getMinutes(),
+      hours: now.getHours()
+    }
+  };
+
+  setInterval(() => {
+    const { seconds, minutes, hours } = getDate();
+    rotateHand(secondHand, seconds, 60);
+    rotateHand(minuteHand, minutes, 60);
+    rotateHand(hourHand, hours, 24);
+  }, 1000)
+
+</script>
 </body>
+
 </html>

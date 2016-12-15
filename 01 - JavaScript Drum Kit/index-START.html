@@ -64,7 +64,7 @@
   const removeTransition = (event) => {
     // skip if the transition is not a transform
     if(event.propertyName !== 'transform') return;
-    event.target.classList.remove('playing')
+    event.target.classList.remove('playing');
   };
 
   document.addEventListener('keydown', (event) => {
