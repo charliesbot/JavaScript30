@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Flex Panels 💪</title>
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
   <style>
     html {
@@ -22,11 +24,16 @@
     }
 
     .panels {
+      display: flex;
       min-height:100vh;
       overflow: hidden;
     }
 
     .panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
       background:#6B0F9C;
       box-shadow:inset 0 0 0 5px rgba(255,255,255,0.1);
       color:white;
@@ -51,6 +58,10 @@
     .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
 
     .panel > * {
+      display: flex;
+      flex: 1 0 auto;
+      justify-content: center;
+      align-items: center;
       margin:0;
       width: 100%;
       transition:transform 0.5s;
@@ -62,12 +73,22 @@
       text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
       font-size: 2em;
     }
+    .panel p:first-child {
+      transform: translateY(-100%);
+    }
     .panel p:nth-child(2) {
       font-size: 4em;
     }
+    .panel p:last-child {
+      transform: translateY(100%);
+    }
 
     .panel.open {
+      flex: 5;
       font-size:40px;
+    }
+    .panel.open-active p:first-child, .panel.open-active p:last-child { 
+      transform: translateY(0);
     }
 
     .cta {
@@ -78,39 +99,51 @@
   </style>
 
 
-  <div class="panels">
-    <div class="panel panel1">
-      <p>Hey</p>
-      <p>Let's</p>
-      <p>Dance</p>
-    </div>
-    <div class="panel panel2">
-      <p>Give</p>
-      <p>Take</p>
-      <p>Receive</p>
-    </div>
-    <div class="panel panel3">
-      <p>Experience</p>
-      <p>It</p>
-      <p>Today</p>
-    </div>
-    <div class="panel panel4">
-      <p>Give</p>
-      <p>All</p>
-      <p>You can</p>
-    </div>
-    <div class="panel panel5">
-      <p>Life</p>
-      <p>In</p>
-      <p>Motion</p>
-    </div>
+<div class="panels">
+  <div class="panel panel1">
+    <p>Hey</p>
+    <p>Let's</p>
+    <p>Dance</p>
   </div>
+  <div class="panel panel2">
+    <p>Give</p>
+    <p>Take</p>
+    <p>Receive</p>
+  </div>
+  <div class="panel panel3">
+    <p>Experience</p>
+    <p>It</p>
+    <p>Today</p>
+  </div>
+  <div class="panel panel4">
+    <p>Give</p>
+    <p>All</p>
+    <p>You can</p>
+  </div>
+  <div class="panel panel5">
+    <p>Life</p>
+    <p>In</p>
+    <p>Motion</p>
+  </div>
+</div>
 
-  <script>
+<script>
+  const panels = document.querySelectorAll('.panel');
+  panels.forEach((panel) => {
+    panel.addEventListener('click', function () {
+      this.classList.toggle('open');
+    })
+    panel.addEventListener('transitionend', function (evt) {
+      if (evt.propertyName === 'flex-grow') {
+        this.classList.toggle('open-active');
+      }
+    })
+  });
 
-  </script>
+</script>
 
 
 
 </body>
+
 </html>
