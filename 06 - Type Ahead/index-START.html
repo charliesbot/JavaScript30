@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Type Ahead 👀</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <form class="search-form">
@@ -14,9 +16,43 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  <script>
+    const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+    const cities = [];
+    fetch(endpoint, { method: 'GET' })
+      .then(blob => blob.json())
+      .then(x => cities.push(...x));
 
-</script>
-  </body>
+    const search = document.querySelector('.search');
+    const list = document.querySelector('.suggestions');
+
+    // curry edition
+    const includesText = search => prop => prop.toLowerCase().includes(search);
+
+    function searchFromAPI(evt) {
+      const target = search.value;
+      const includesSearch = includesText(target);
+      const filtered = cities.filter(x => includesSearch(x.city) || includesSearch(x.state));
+      const html = filtered.map(x => {
+        const regex = new RegExp(this.value, 'gi');
+        const cityName = x.city.replace(regex, `<span class="hl">${this.value}</span>`);
+        const stateName = x.state.replace(regex, `<span class="hl">${this.value}</span>`);
+        const population = x.population.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return `
+        <li>
+          <span class="name">${cityName}, ${stateName}</span>
+          <span class="population">${population}</span>
+        </li>
+        `
+      });
+      list.innerHTML = html.join('');
+    }
+
+    search.addEventListener('keyup', searchFromAPI);
+
+
+
+  </script>
+</body>
+
 </html>
