@@ -42,6 +42,14 @@ body {
   max-width:50px;
 }
 
+.toggle:before {
+  content: '►'
+}
+
+.toggle.pause:before {
+  content: '▐▐'
+}
+
 .player__button:focus {
   border-color: #ffc600;
 }
