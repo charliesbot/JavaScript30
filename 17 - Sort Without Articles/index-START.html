@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Sort Without Articles</title>
 </head>
+
 <body>
 
   <style>
@@ -40,13 +42,22 @@
 
   </style>
 
-  <ul id="bands"></ul>
+<ul id="bands"></ul>
 
 <script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  const cleanString = (x) => x.replace(/^(?:(the|a|an)\s)/i, "");
+  const sortedBand = bands.sort((a, b) => cleanString(a) > cleanString(b) ? 1 : -1);
 
+  const bandsContainer = document.querySelector('#bands');
+  const bandsList =
+    sortedBand
+      .map(x => `<li>${x}</li>`)
+      .join('');
+  bandsContainer.innerHTML = bandsList;
 
 </script>
 
 </body>
+
 </html>
