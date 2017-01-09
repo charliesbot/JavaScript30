@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Understanding JavaScript's Capture</title>
 </head>
+
 <body class="bod">
 
   <div class="one">
@@ -13,7 +15,7 @@
     </div>
   </div>
 
-<style>
+  <style>
   html {
     box-sizing: border-box;
   }
@@ -39,7 +41,16 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
+
+  function logText(e) {
+    e.stopPropagation()
+    console.log(this.classList.value);
+  }
+
+  divs.forEach(x => x.addEventListener('click', logText));
 
 </script>
 </body>
+
 </html>
